@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+</style>
+</head>
+<body>
+
+{% comment %} User data view start {% endcomment %}
+    <div class="container">
+    <h1 class="text-center">Hello ReqRes Users!</h1>
+    <br>
+        <div class="row row-cols-3">
+        
+        {% for res in users %}
+
+          <div class="col my-2">
+            <div class="text-center">
+                <strong> {{ res.first_name }} </strong>
+                <p> {{ res.email }} </p>
+                <img src={{ res.avtar }} class="img-thumbnail" alt="Loading...">
+            </div>
+          </div>
+          
+        {% endfor %}
+        </div>
+    </div>
+{% comment %} User data view end {% endcomment %}
+
+{% comment %} pagination start {% endcomment %}
+<div class="text-center my-3"> 
+  <div class="pagination">
+    {% if users.has_previous %}
+        <a href="?page=1">&laquo;</a>
+        <a href="?page={{ users.previous_page_number }}">previous</a>
+    {% endif %}
+        <a href="#" class="active">Page {{ users.number }} of {{ users.paginator.num_pages }}.</a>
+    {% if users.has_next %}
+        <a href="?page={{ users.next_page_number }}">next</a>
+        <a href="?page={{ users.paginator.num_pages }}">&raquo;</a>
+    {% endif %}
+  </div>
+</div>
+{% comment %} pagination end {% endcomment %}
+
+</body>
+</html>
